@@ -22,8 +22,8 @@ from ....application.exceptions import (
 )
 from ....dependency_injection.containers import container
 from ....dependency_injection.dispatcher import Dispatcher
+from ....infrastructure.persistence.workspaces.models import Workspace
 from .forms import WorkspaceWithFileUploadForm
-from .models import Workspace
 
 
 @method_decorator(csrf_exempt, name="dispatch")

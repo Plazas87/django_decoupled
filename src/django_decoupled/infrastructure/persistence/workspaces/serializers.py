@@ -2,7 +2,7 @@
 
 from ....application.dtos import CategoryDTO, DocumentDTO, WorkspaceDTO
 from ....application.interfaces import IDBSerializer
-from ....controllers.apps.workspaces.models import Category, Document, Workspace
+from .models import Category, Document, Workspace
 
 
 class DocumentDBSerializer(IDBSerializer[Document, DocumentDTO]):

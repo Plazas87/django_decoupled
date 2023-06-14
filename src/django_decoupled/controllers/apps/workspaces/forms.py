@@ -9,7 +9,7 @@ from ....application.validators import (
     WorksapceNameValidator,
     WorkspaceFileValidator,
 )
-from .models import (
+from ....infrastructure.persistence.workspaces.models import (
     Category,
     Document,
     Workspace,
@@ -67,9 +67,3 @@ class WorkspaceWithFileUploadForm(WorkspaceForm):
     dataset = forms.FileField(
         validators=[WorkspaceFileValidator.validate], required=True
     )
-
-    # def save(self, commit=True):
-    #     """Save method."""
-    #     # do something with self.cleaned_data['dataset']
-    #     print(self.cleaned_data["dataset"])
-    #     return super().save(commit=commit)

@@ -10,7 +10,7 @@ from ....application.exceptions import (
     WorkspaceDoesNotExistsError,
 )
 from ....application.interfaces import IDBSerializer, IFinder, IRepository
-from ....controllers.apps.workspaces.models import Category, Document, Workspace
+from .models import Category, Document, Workspace
 
 
 class DjangoWorkspaceRepository(IRepository[WorkspaceDTO]):

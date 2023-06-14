@@ -6,12 +6,12 @@ from django.db.models import QuerySet
 from django.http import HttpRequest
 
 from ....dependency_injection.containers import container
-from .forms import CategoryForm, DocumentForm, WorkspaceForm
-from .models import (
+from ....infrastructure.persistence.workspaces.models import (
     Category,
     Document,
     Workspace,
 )
+from .forms import CategoryForm, DocumentForm, WorkspaceForm
 
 if TYPE_CHECKING:
     from ....dependency_injection.dispatcher import Dispatcher

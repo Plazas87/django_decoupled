@@ -4,7 +4,7 @@ from typing import List, Optional
 from django_decoupled.application.dtos import CategoryDTO, DocumentDTO, WorkspaceDTO
 from django_decoupled.application.interfaces import IDBSerializer, IFinder
 
-from ....controllers.apps.workspaces.models import Category, Document, Workspace
+from .models import Category, Document, Workspace
 
 
 class DjangoWorkspaceFinder(IFinder[WorkspaceDTO]):

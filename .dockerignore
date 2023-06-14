@@ -1,0 +1,25 @@
+.venv/
+.vscode/
+.ruff_cache/
+.python-version
+.coveragerc
+.env
+.git/
+.gitignore
+pytest.ini
+docker-compose.yaml
+
+build
+dist
+*.egg-info
+*.egg/
+*.pyc
+*.swp
+
+.tox
+.coverage
+html/*
+__pycache__
+
+# Compiled Documentation
+docs/_build

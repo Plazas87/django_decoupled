@@ -1,0 +1,1 @@
+"""Secondary driven adpters package."""

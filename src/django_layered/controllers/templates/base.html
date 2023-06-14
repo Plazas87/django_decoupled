@@ -1,0 +1,175 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+            {% block title %}
+            {% endblock title %}
+        </title>
+        {% block css %}
+            <link rel="stylesheet"
+                  href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+            {% block extra_css %}
+            {% endblock extra_css %}
+        {% endblock css %}
+    </head>
+    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+        {% block header %}
+            <div class="container is-fluid">
+                <nav class="navbar">
+                    {% block messages %}
+                        {% if messages %}
+                            <div class="messages columns is-desktop is-overlay"
+                                 _="on load wait 3s remove me">
+                                <div class="column is-4 is-offset-4">
+                                    {% for message in messages %}
+                                        <div class="message {% if message.tags %}is-{{ message.tags }}{% endif %}">
+                                            <div class="message-body">{{ message }}</div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endblock messages %}
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="/">
+                            <h1 class="title">Clasifica</h1>
+                        </a>
+                        <a class="navbar-item is-hidden-desktop"
+                           href="https://twitter.com/ClasificaIO"
+                           target="_blank">
+                            <span class="icon" style="color: #55acee;">
+                                <i class="fab fa-twitter"></i>
+                            </span>
+                        </a>
+                        <div class="navbar-burger burger" data-target="navMenuExample">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div id="navMenuExample" class="navbar-menu">
+                        <div class="navbar-start">
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <a class="navbar-link  is-active" href="/documentation/overview/start/">Documentación</a>
+                                <div class="navbar-dropdown ">
+                                    <a class="navbar-item " href="/documentation/overview/start/">Overview</a>
+                                    <a class="navbar-item "
+                                       href="http://bulma.io/documentation/modifiers/syntax/">Modifiers</a>
+                                    <a class="navbar-item "
+                                       href="http://bulma.io/documentation/grid/columns/">Grid</a>
+                                    <a class="navbar-item "
+                                       href="http://bulma.io/documentation/layout/container/">Layout</a>
+                                    <a class="navbar-item "
+                                       href="http://bulma.io/documentation/form/general/">Form</a>
+                                    <a class="navbar-item "
+                                       href="http://bulma.io/documentation/elements/box/">Elements</a>
+                                    <a class="navbar-item is-active"
+                                       href="http://bulma.io/documentation/components/breadcrumb/">Components</a>
+                                </div>
+                            </div>
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <div class="navbar-link">Contacto</div>
+                                <div id="moreDropdown" class="navbar-dropdown ">
+                                    <a class="navbar-item " href="http://bulma.io/extensions/">
+                                        <div class="level is-mobile">
+                                            <div class="level-left">
+                                                <div class="level-item">
+                                                    <p>
+                                                        <strong>Extensions</strong>
+                                                        <br>
+                                                        <small>Side projects to enhance Bulma</small>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="level-right">
+                                                <div class="level-item">
+                                                    <span class="icon has-text-info">
+                                                        <i class="fas fa-plug"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="navbar-end">
+                            <div class="navbar-item">
+                                {% if user.is_authenticated %}
+                                    <div class="buttons">
+                                        <a href="{% url 'account_email' %}" class="button is-light">{% trans "Cambiar E-mail" %}</a>
+                                        <a href="{% url 'account_logout' %}" class="button is-info">{% trans "Salir" %}</a>
+                                    </div>
+                                {% else %}
+                                    {% with request.resolver_match.url_name as url_name %}
+                                        <div class="buttons">
+                                            <a href="{% url 'account_login' %}"
+                                               class="button {% if url_name == 'account_login' %}is-primary{% else %}is-light{% endif %}">{% trans "Acceder" %}</a>
+                                            <a href="{% url 'account_signup' %}"
+                                               class="button {% if url_name == 'account_signup' %}is-primary{% else %}is-light{% endif %}">{% trans "Regístrarse" %}</a>
+                                        </div>
+                                    {% endwith %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        {% endblock header %}
+        {% block hero %}
+            <section class="hero is-large is-info">
+                <div class="hero-body">
+                    <div class="container has-text-centered">
+                        <p class="title">Crea tu primer proyecto</p>
+                        <p class="subtitle">
+                            Para empezar, elige el tipo de proyecto que quieres crear y créalo para comenzar a subir datos de entrenamiento.
+                        </p>
+                        <a class="button is-primary" href="{% url 'workspaces:create' %}">Crear proyecto</a>
+                    </div>
+                </div>
+            </section>
+        {% endblock hero %}
+        <section class="section is-fullheight">
+            <div class="container is-fluid">
+                {% block content_area %}
+                    {% block content_title %}
+                    {% endblock content_title %}
+                    {% block content %}
+                    {% endblock content %}
+                {% endblock content_area %}
+            </div>
+        </section>
+        {% block modal %}
+        {% endblock modal %}
+        {% block footer %}
+            <footer class="footer">
+                <div class="container">
+                    <div class="content has-text-centered">
+                        <p>
+                            <strong>Bulma</strong> by <a href="http://jgthms.com">Jeremy Thomas</a>. <strong>Django-Bulma</strong> by <a href="http://timonweb.com">Tim Kamanin</a>. The source code is licensed
+                            <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. Build nicely.
+                        </p>
+                        <p>
+                            <a class="icon" href="https://github.com/jgthms/bulma">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </footer>
+        {% endblock footer %}
+        {% block javascript %}
+            <script src="https://kit.fontawesome.com/4e3a8191e0.js"
+                    crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/htmx.org@1.9.2"
+                    integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h"
+                    crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/hyperscript.org@0.9.8"></script>
+            {% block extra_javascript %}
+            {% endblock extra_javascript %}
+        {% endblock javascript %}
+    </body>
+</html>

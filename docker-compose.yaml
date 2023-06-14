@@ -1,0 +1,44 @@
+version: '3.4'
+
+services:
+  django_decoupled:
+    container_name: django_decoupled
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: django_decoupled_dev
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=${DEBUG}
+      - DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - PG_NAME=${PG_NAME}
+      - PG_USER=${PG_USER}
+      - PG_PASSWORD=${PG_PASSWORD}
+      - PG_HOST=db
+      - PG_PORT=${PG_PORT}
+      - FLUX_TRAIN_ENDPOINT_URL=${FLUX_TRAIN_ENDPOINT_URL}
+      - FLUX_TRAIN_ENDPOINT_METHOD=${FLUX_TRAIN_ENDPOINT_METHOD}
+      - FLUX_METRICS_ENDPOINT_URL=${FLUX_METRICS_ENDPOINT_URL}
+      - FLUX_METRICS_ENDPOINT_METHOD=${FLUX_METRICS_ENDPOINT_METHOD}
+      - AVAILABLE_HTTP_METHODS=${AVAILABLE_HTTP_METHODS}
+    volumes:
+      - ./src:/app/deloren/src
+    depends_on:
+      - db
+
+  db:
+    image: docker.io/bitnami/postgresql:15
+    container_name: db
+    environment:
+      - POSTGRESQL_USERNAME=${PG_USER}
+      - POSTGRESQL_PASSWORD=${PG_PASSWORD}
+      - POSTGRESQL_DATABASE=${PG_NAME}
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - 'postgresql_data:/bitnami/postgresql'
+
+volumes:
+  postgresql_data:
+    driver: local

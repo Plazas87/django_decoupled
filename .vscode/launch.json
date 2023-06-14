@@ -1,0 +1,30 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Docker: django_decoupled",
+      "type": "python",
+      "request": "attach",
+      "port": 5678,
+      "host": "127.0.0.1",
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}",
+          "remoteRoot": "/app/django_layered"
+        }
+      ],
+      "justMyCode": false
+    },
+    {
+      "name": "Local: django_decoupled",
+      "type": "python",
+      "request": "launch",
+      "program": "src/django_layered/controllers/manage.py",
+      "args": [
+        "runserver"
+      ],
+      "django": true,
+      "justMyCode": false
+    }
+  ]
+}

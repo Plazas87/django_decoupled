@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block hero %}
+    <section class="hero is-large is-info">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <p class="title">Creando el proyecto...</p>
+                <p class="subtitle">Estamos creando el proyecto y entrenando el modelo. Esto puede tardar unos segundos.</p>
+                <div hx-post="{% url 'workspaces:train' pk %}" hx-trigger="load">
+                    <progress class="progress is-medium is-primary htmx-indicator" max="100">60%</progress>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock hero %}

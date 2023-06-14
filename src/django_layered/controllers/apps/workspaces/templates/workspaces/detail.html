@@ -1,0 +1,407 @@
+{% extends 'base.html' %}
+{% load static metrics pygmentify_tags %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% pygmentify_css 'monokai' %}">
+    <style>
+        .scroll-x {
+            overflow-x: auto;
+        }
+        pre {
+            background: #272822;
+            color: white;
+        }
+    </style>
+{% endblock extra_css %}
+{% block hero %}
+{% endblock hero %}
+{% block content %}
+    {% with metrics=object.metrics %}
+        <div class="columns">
+            <div class="column is-2">
+                <aside class="menu">
+                    <p class="menu-label">General</p>
+                    <ul class="menu-list">
+                        <li>
+                            <a href="/">Proyectos</a>
+                            <ul>
+                                <li>
+                                    <a class="is-active">{{ object.name }}</a>
+                                </li>
+                                <li>
+                                    <a>Crear nuevo proyecto</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Documentación</a>
+                        </li>
+                    </ul>
+                    <p class="menu-label">Administración</p>
+                    <ul class="menu-list">
+                        <li>
+                            <a href="#">Configuración</a>
+                        </li>
+                        <li>
+                            <a href="#">Cuenta</a>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="column">
+                <div class="container content is-fluid">
+                    <h1 class="title">{{ object.name }}</h1>
+                    <div class="tile is-ancestor">
+                        <div class="tile is-parent">
+                            <div class="tile is-child box">
+                                <p class="title is-5">Tasa de aciertos</p>
+                                <p class="subtitle is-6 mt-1">{{ metrics.accuracy|percentage|floatformat }} %</p>
+                            </div>
+                        </div>
+                        <div class="tile is-parent">
+                            <div class="tile is-child box">
+                                <p class="title is-5">Número de clases</p>
+                                <p class="subtitle is-6 mt-1">{{ metrics.labels | length }}</p>
+                            </div>
+                        </div>
+                        <div class="tile is-parent">
+                            <div class="tile is-child box">
+                                <p class="title is-5">Número de documentos</p>
+                                <p class="subtitle is-6 mt-1">{{ metrics|weighted_avg|support }}</p>
+                            </div>
+                        </div>
+                        <div class="tile is-parent">
+                            <div class="tile is-child box">
+                                <p class="title is-5">Peticiones consumidas</p>
+                                <p class="subtitle is-6 mt-1">1123 de 30000</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container is-fluid">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="tabs is-centered is-toggle is-fullwidth is-medium">
+                                <ul _="on click take .is-active from .tab for the closest
+                                    <li/>
+                                    to the parentElement of event.target then send showContent to
+                                    <div/>
+                                    ">
+                                    <li id="tab-usage" class="tab is-active">
+                                        <a>
+                                            <span class="icon is-small"><i class="fas fa-paper-plane" aria-hidden="true"></i></span>
+                                            <span>Uso y Pruebas</span>
+                                        </a>
+                                    </li>
+                                    <li id="tab-report" class="tab">
+                                        <a>
+                                            <span class="icon is-small"><i class="fas fa-chart-line" aria-hidden="true"></i></span>
+                                            <span>Informe de Rendimiento</span>
+                                        </a>
+                                    </li>
+                                    <li id="tab-matrix" class="tab">
+                                        <a>
+                                            <span class="icon is-small"><i class="fas fa-table" aria-hidden="true"></i></span>
+                                            <span>Matriz de Confusión</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="usage"
+                         class="columns is-desktop"
+                         _="on showContent if #tab-usage matches .is-active then remove .is-hidden else add .is-hidden">
+                        <div class="column is-two-thirds-desktop">
+                            <section class="section">
+                                <h1 class="title">Uso del servicio</h1>
+                                <h2 class="subtitle">
+                                    Para empezar a clasificar sólo tienes que invocar el servicio. A continuación, te mostramos diferentes formas de hacerlo.
+                                </h2>
+                            </section>
+                            <div class="tabs is-boxed">
+                                <ul>
+                                    <li class="is-active">
+                                        <a>
+                                            <span class="icon is-small"><i class="fas fa-terminal" aria-hidden="true"></i></span>
+                                            <span>Shell</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <span class="icon is-small"><i class="fas fa-brands fa-python" aria-hidden="true"></i></span>
+                                            <span>Python</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <span class="icon is-small"><i class="fas fa-brands fa-square-js" aria-hidden="true"></i></span>
+                                            <span>Javascript</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <span class="icon is-small"><i class="fas fa-brands fa-java" aria-hidden="true"></i></span>
+                                            <span>Java</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="columns">
+                                <div class="column scroll-x">
+                                    <div class="content">
+                                        {% pygmentify 'monokai' %}
+                                        <pre class="shell">$ curl -X POST \
+-H "Authorization: Token asdfljklñ1234" \
+-H "Content-Type: application/json" \
+-d '{"text": "Texto a clasificar"}' \
+https://api.clasificador.com/v1/{{ object.id }}/clasifica</pre>
+                                    {% endpygmentify %}
+                                    <h3 class="is-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac egestas massa. Curabitur volutpat tincidunt aliquam.
+                                        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec non risus tincidunt, commodo augue non, pellentesque mauris.
+                                        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Phasellus nec placerat metus, sed congue ligula.
+                                        Integer commodo arcu in dolor malesuada, id euismod enim tincidunt. Mauris volutpat, elit et finibus interdum, turpis orci tincidunt nulla, a elementum felis magna sit amet neque.
+                                        Praesent eu consequat est, ac consequat purus. Nulla at mi ut justo tempor elementum ac in massa.
+                                    </p>
+                                    <figure class="image">
+                                        <img src="https://placehold.co/600x400" alt="Placeholder image" />
+                                    </figure>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac egestas massa. Curabitur volutpat tincidunt aliquam.
+                                        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec non risus tincidunt, commodo augue non, pellentesque mauris.
+                                        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Phasellus nec placerat metus, sed congue ligula.
+                                        Integer commodo arcu in dolor malesuada, id euismod enim tincidunt. Mauris volutpat, elit et finibus interdum, turpis orci tincidunt nulla, a elementum felis magna sit amet neque.
+                                        Praesent eu consequat est, ac consequat purus. Nulla at mi ut justo tempor elementum ac in massa.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <section class="section">
+                            <h1 class="title">Probador</h1>
+                            <h2 class="subtitle">Prueba aquí tu clasificador.</h2>
+                        </section>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="content">
+                                    <form>
+                                        <div class="field">
+                                            <label class="label">Texto</label>
+                                            <div class="control">
+                                                <textarea class="textarea" placeholder="Escribe aquí el texto a clasificar"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="control">
+                                                <button class="button is-primary">Clasifica</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="report"
+                     class="columns is-hidden"
+                     _="on showContent if #tab-report matches .is-active then remove .is-hidden else add .is-hidden">
+                    <div class="column is-four-fifths is-desktop">
+                        <table class="table is-striped is-fullwidth is-hoverable">
+                            <thead>
+                                <tr>
+                                    <th class="is-narrow">Clase</th>
+                                    <th>Precisión</th>
+                                    <th>Exhaustividad</th>
+                                    <th>Valor F1</th>
+                                    <th class="has-text-centered">Ejemplos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for key, value in metrics.items %}
+                                    {% if key in metrics.labels %}
+                                        <tr>
+                                            <td class="is-narrow">{{ key }}</td>
+                                            <td>
+                                                <div class="columns">
+                                                    <div class="column">
+                                                        <progress class="progress {% if value.precision > 0.80 %}is-success{% elif value.precision > 0.65 %}is-warning{% else %}is-danger{% endif %}"
+                                                                  value="{{ value.precision|floatformat:"-2u" }}"
+                                                                  max="1">{{ value.precision|floatformat:"-2u" }}</progress>
+                                                    </div>
+                                                    <div class="column">
+                                                        <p class="is-size-7">{{ value.precision|percentage|floatformat }}%</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="columns">
+                                                    <div class="column">
+                                                        <progress class="progress {% if value.recall > 0.80 %}is-success{% elif value.recall > 0.65 %}is-warning{% else %}is-danger{% endif %}"
+                                                                  value="{{ value.recall|floatformat:"-2u" }}"
+                                                                  max="1">{{ value.recall|floatformat:"-2u" }}</progress>
+                                                    </div>
+                                                    <div class="column">
+                                                        <p class="is-size-7">{{ value.recall|percentage|floatformat }}%</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="columns">
+                                                    <div class="column">
+                                                        <progress class="progress {% if value|f1_score > 0.80 %}is-success{% elif value|f1_score > 0.65 %}is-warning{% else %}is-danger{% endif %}"
+                                                                  value="{{ value|f1_score|floatformat:"-2u" }}"
+                                                                  max="1">{{ value|f1_score|floatformat:"-2u" }}</progress>
+                                                    </div>
+                                                    <div class="column">
+                                                        <p class="is-size-7">{{ value|f1_score|percentage|floatformat }}%</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="has-text-centered">{{ value.support|floatformat }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="column content">
+                        <h2>Promedio Macro</h2>
+                        <div class="columns">
+                            <div class="column">
+                                <p>
+                                    <strong>Exhaustividad:</strong> {{ metrics|macro_avg|recall|percentage|floatformat }}%
+                                </p>
+                                <progress class="progress {% if metrics|macro_avg|recall > 0.80 %}is-success{% elif metrics.accuracy > 0.65 %}is-warning{% else %}is-danger{% endif %}"
+                                          value="{{ metrics|macro_avg|recall|floatformat:"-2u" }}"
+                                          max="1">{{ metrics|macro_avg|recall|floatformat:"-2u" }}</progress>
+                                <p>
+                                    <strong>Precisión:</strong> {{ metrics|macro_avg|precision|percentage|floatformat }}%
+                                </p>
+                                <progress class="progress {% if metrics|macro_avg|precision > 0.80 %}is-success{% elif metrics.accuracy > 0.65 %}is-warning{% else %}is-danger{% endif %}"
+                                          value="{{ metrics|macro_avg|precision|floatformat:"-2u" }}"
+                                          max="1">{{ metrics|macro_avg|recall|floatformat:"-2u" }}</progress>
+                                <p>
+                                    <strong>Valor F1:</strong> {{ metrics|macro_avg|f1_score|percentage|floatformat }}%
+                                </p>
+                                <progress class="progress {% if metrics|macro_avg|f1_score > 0.80 %}is-success{% elif metrics.accuracy > 0.65 %}is-warning{% else %}is-danger{% endif %}"
+                                          value="{{ metrics|macro_avg|f1_score|floatformat:"-2u" }}"
+                                          max="1">{{ metrics|macro_avg|f1_score|floatformat:"-2u" }}</progress>
+                            </div>
+                        </div>
+                        <h2>Promedio Balanceado</h2>
+                        <div class="columns">
+                            <div class="column">
+                                <p>
+                                    <strong>Exhaustividad:</strong> {{ metrics|weighted_avg|recall|percentage|floatformat }}%
+                                </p>
+                                <progress class="progress {% if metrics|weighted_avg|recall > 0.80 %}is-success{% elif metrics.accuracy > 0.65 %}is-warning{% else %}is-danger{% endif %}"
+                                          value="{{ metrics|weighted_avg|recall|floatformat:"-2u" }}"
+                                          max="1">{{ metrics|weighted_avg|recall|floatformat:"-2u" }}</progress>
+                                <p>
+                                    <strong>Precisión:</strong> {{ metrics|weighted_avg|precision|percentage|floatformat }}%
+                                </p>
+                                <progress class="progress {% if metrics|weighted_avg|precision > 0.80 %}is-success{% elif metrics.accuracy > 0.65 %}is-warning{% else %}is-danger{% endif %}"
+                                          value="{{ metrics|weighted_avg|precision|floatformat:"-2u" }}"
+                                          max="1">{{ metrics|weighted_avg|recall|floatformat:"-2u" }}</progress>
+                                <p>
+                                    <strong>Valor F1:</strong> {{ metrics|weighted_avg|f1_score|percentage|floatformat }}%
+                                </p>
+                                <progress class="progress {% if metrics|weighted_avg|f1_score > 0.80 %}is-success{% elif metrics.accuracy > 0.65 %}is-warning{% else %}is-danger{% endif %}"
+                                          value="{{ metrics|weighted_avg|f1_score|floatformat:"-2u" }}"
+                                          max="1">{{ metrics|weighted_avg|f1_score|floatformat:"-2u" }}</progress>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <div class="buttons">
+                                    <button class="button is-light is-fullwidth">Cargar textos</button>
+                                    <button class="button is-light is-fullwidth">Reentrenar</button>
+                                    <button class="button is-light is-fullwidth">Publicar</button>
+                                    <button class="button is-danger is-fullwidth">Borrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="confusion-matrix"
+                     class="columns is-hidden"
+                     _="on showContent if #tab-matrix matches .is-active then remove .is-hidden then showConfusionMatrix() else add .is-hidden">
+                    <div class="column content">
+                        <div id="confusion-matrix-chart" style="height: 100vh"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endwith %}
+{% endblock content %}
+{% block extra_javascript %}
+    {% with metrics=object.metrics %}
+        <script src="https://cdn.plot.ly/plotly-2.20.0.min.js" charset="utf-8"></script>
+        <script>
+            function showConfusionMatrix() {
+                cm = document.getElementById('confusion-matrix-chart');
+
+                if (cm.innerHTML == '') {
+                    var xValues = {{ metrics.labels|safe }};
+
+                    var yValues = {{ metrics.labels|safe }};
+
+                    var zValues = {{ metrics.confusion_matrix }};
+
+                    var data = [{
+                        z: zValues.reverse(),
+                        x: xValues,
+                        y: yValues.reverse(),
+                        type: 'heatmap',
+                        hoverongaps: false,
+                        colorscale: 'YlGnBu',
+                    }];
+
+                    var layout = {
+                        annotations: [],
+                        xaxis: {
+                            title: 'Predicciones',
+                            ticks: '',
+                            tickangle: 45,
+                            side: 'top',
+                            automargin: true
+                        },
+                        yaxis: {
+                            title: 'Valores reales',
+                            ticks: '',
+                            automargin: true
+                        },
+                        autosize: true,
+                    };
+
+                    var config = {
+                        responsive: true,
+                    }
+
+                    for ( var i = 0; i < yValues.length; i++ ) {
+                        for ( var j = 0; j < xValues.length; j++ ) {
+                        var currentValue = zValues[i][j];
+                        var result = {
+                            xref: 'x1',
+                            yref: 'y1',
+                            x: xValues[j],
+                            y: yValues[i],
+                            text: zValues[i][j],
+                            showarrow: false,
+                        };
+                        layout.annotations.push(result);
+                        }
+                    }
+
+                    Plotly.newPlot( cm, data, layout, config );
+                }
+            }
+        </script>
+    {% endwith %}
+{% endblock extra_javascript %}

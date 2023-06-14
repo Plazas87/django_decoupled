@@ -1,0 +1,87 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+{% load account socialaccount %}
+{% block head_title %}
+  {% trans "Accede a Clasifica.io" %}
+{% endblock %}
+{% block content %}
+  {% get_providers as socialaccount_providers %}
+  <div class="hero is-halfheight">
+    <div class="hero-body is-justify-content-center is-align-items-center">
+      <div class="columns is-flex is-flex-direction-column box">
+        {% if form.non_field_errors %}
+          {% for error in form.non_field_errors %}
+            <div class="message is-danger">
+              <div class="message-body">{{ error }}</div>
+            </div>
+          {% endfor %}
+        {% endif %}
+        {% if socialaccount_providers %}
+          <div class="column">
+            <p>
+              {% blocktrans with site.name as site_name %}Accede con una de tus cuentas
+            de terceros o <a href="{{ signup_url }}">regístrate</a>
+            para obtener tu cuenta en {{ site_name }} y accede completando el siguiente
+            formulario:{% endblocktrans %}
+            </p>
+            <div class="socialaccount_ballot">
+              <ul class="socialaccount_providers">
+                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+              </ul>
+              <div class="login-or">{% trans 'o' %}</div>
+            </div>
+            {% include "socialaccount/snippets/login_extra.html" %}
+          </div>
+        {% endif %}
+        <form class="login" method="post" action="{% url 'account_login' %}">
+          {% csrf_token %}
+          {% for field in form %}
+            {% if field.widget_type == 'checkbox' %}
+              <div class="column">
+                <input type="{{ field.widget_type }}"
+                       name="{{ field.name }}"
+                       placeholder="{{ field.help_text }}"
+                       autocomplete="{{ field.widget_type }}"
+                       id="{{ field.id_for_label }}">
+                <label for="{{ field.id_for_label }}">Mantener la sesión activa</label>
+              </div>
+            {% else %}
+              <div class="column">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                <input class="input {% if field.errors %}is-danger{% else %}is-primary{% endif %}"
+                       type="{{ field.widget_type }}"
+                       name="{{ field.name }}"
+                       placeholder="{{ field.help_text }}"
+                       autocomplete="{{ field.widget_type }}"
+                       required="{{ field.required }}"
+                       id="{{ field.id_for_label }}">
+                {% if field.errors %}
+                  {% for error in field.errors %}<p class="help is-danger">{{ error }}</p>{% endfor %}
+                {% endif %}
+                {% if field.name == 'password' %}
+                  <a href="{% url 'account_reset_password' %}"
+                     class="is-size-7 has-text-primary">¿No recuerdas la contraseña?</a>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+          {% if redirect_field_value %}
+            <input type="hidden"
+                   name="{{ redirect_field_name }}"
+                   value="{{ redirect_field_value }}" />
+          {% endif %}
+          <div class="column">
+            <button class="button is-primary is-fullwidth" type="submit">Login</button>
+          </div>
+        </form>
+        {% if not socialaccount_providers %}
+          <div class="has-text-centered">
+            <p class="is-size-7">
+              {% blocktrans %}¿No tienes cuenta todavía? <a href="{{ signup_url }}" class="has-text-primary">Regístrate</a>{% endblocktrans %}
+            </p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

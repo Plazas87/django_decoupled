@@ -25,61 +25,27 @@ repos:
     rev: 'v0.0.253'
     hooks:
       - id: ruff
-        name: Delorean Ruff
         args: [--fix, --exit-non-zero-on-fix]
-        files: ^delorean/src/
+        files: ^src/
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.961
     hooks:
       - id: mypy
-        name: Delorean Mypy
         args:
           [
             "--config-file",
-            "delorean/pyproject.toml",
+            "pyproject.toml",
             "--python-executable",
-            "delorean/.venv/bin/python",
+            ".venv/bin/python",
           ]
         additional_dependencies: [django-stubs, types-all]
-        files: ^delorean/src/
+        files: ^src/
 
 
   - repo: https://github.com/psf/black
     rev: 22.6.0
     hooks:
       - id: black
-        name: Delorean Black
-        args: ["--config", "delorean/pyproject.toml"]
-        files: ^delorean/src/
-
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    # Ruff version.
-    rev: 'v0.0.253'
-    hooks:
-      - id: ruff
-        name: Flux Ruff
-        args: [--fix, --exit-non-zero-on-fix]
-        files: ^flux/src/
-
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.961
-    hooks:
-      - id: mypy
-        name: Flux Mypy
-        args:
-          [
-            "--config-file",
-            "flux/pyproject.toml",
-            "--python-executable",
-            "flux/.venv/bin/python",
-          ]
-        files: ^flux/src/
-
-  - repo: https://github.com/psf/black
-    rev: 22.6.0
-    hooks:
-      - id: black
-        name: Flux Black
-        args: ["--config", "flux/pyproject.toml"]
-        files: ^delorean/src/
+        args: ["--config", "pyproject.toml"]
+        files: ^src/

@@ -19,7 +19,7 @@
       "name": "Local: django_decoupled",
       "type": "python",
       "request": "launch",
-      "program": "src/django_layered/controllers/manage.py",
+      "program": "src/django_decoupled/controllers/manage.py",
       "args": [
         "runserver"
       ],

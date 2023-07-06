@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, Generic, List, Optional, TypeVar
 from uuid import UUID
 
-from .exceptions import (
+from ..exceptions.workspaces import (
     CategoryNameValidationError,
     DocumentTextValidationError,
     WorkspaceNameValidationError,

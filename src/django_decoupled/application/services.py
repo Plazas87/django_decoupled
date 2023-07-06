@@ -2,7 +2,7 @@
 import uuid
 from typing import Dict, List, Optional, Set
 
-from ..domain.models import (
+from ..domain.models.workspaces import (
     Category,
     CategoryCollection,
     CategoryId,

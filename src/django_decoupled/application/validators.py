@@ -1,7 +1,7 @@
 """Validators module."""
 from typing import Any
 
-from ..domain.models import CategoryName, DocumentText, WorkspaceName
+from ..domain.models.workspaces import CategoryName, DocumentText, WorkspaceName
 from .interfaces import IValidator
 
 

@@ -11,7 +11,7 @@ from django_decoupled.application.exceptions import (
 )
 
 from ..dependency_injection.dispatcher import Handler
-from ..domain.models import (
+from ..domain.models.workspaces import (
     CategoryCollection,
     Workspace,
     WorkspaceId,

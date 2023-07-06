@@ -30,7 +30,7 @@ from .forms import WorkspaceWithFileUploadForm
 class FileUploadView(LoginRequiredMixin, View):
     """FileUploadView class."""
 
-    login_url = "admin/login/"
+    # login_url = "users/login/"
 
     template = "workspaces/upload_file.html"
 

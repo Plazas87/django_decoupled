@@ -35,6 +35,8 @@ THIRD_PARTY_APPS: List[str] = [
     "allauth.socialaccount",
     "pygmentify",
     "whitenoise.runserver_nostatic",
+    "crispy_forms",
+    "crispy_bootstrap4",
 ]
 
 LOCAL_APPS: List[str] = [
@@ -65,8 +67,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "django_decoupled.controllers.config.urls"
 
-LOGIN_REDIRECT_URL = "/workspaces/"
-LOGOUT_REDIRECT_URL = "/accounts/login/"
+LOGIN_URL = "/users/login/"
+LOGIN_REDIRECT_URL = "/workspaces/upload_file/"
+LOGOUT_REDIRECT_URL = "/users/login/"
 
 TEMPLATES = [
     {
@@ -178,3 +181,6 @@ FLUX_METRICS_ENDPOINT_METHOD = os.environ["FLUX_METRICS_ENDPOINT_METHOD"]
 
 # REQUESTOR
 REQUESTOR_AVAILABLE_HTTP_METHODS = os.environ["AVAILABLE_HTTP_METHODS"]
+
+# Crispy forms
+CRISPY_TEMPLATE_PACK = "bootstrap4"

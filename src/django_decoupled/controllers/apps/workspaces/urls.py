@@ -15,5 +15,5 @@ urlpatterns = [
     path("create/", WorkspaceCreateView.as_view(), name="create"),
     path("train/<uuid:pk>/", WorkspaceTrainView.as_view(), name="train"),
     path("detail/<uuid:pk>/", WorkspaceDetailView.as_view(), name="detail"),
-    path("upload_file/", FileUploadView.as_view()),
+    path("upload_file/", FileUploadView.as_view(), name="file-upload"),
 ]

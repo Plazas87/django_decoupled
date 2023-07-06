@@ -21,7 +21,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("accounts/", include("allauth.urls")),
+    path("users/", include("django_decoupled.controllers.apps.users.urls")),
     path("workspaces/", include("django_decoupled.controllers.apps.workspaces.urls")),
 ]
 

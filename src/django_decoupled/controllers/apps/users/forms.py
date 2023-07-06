@@ -1,7 +1,7 @@
 """User forms module."""
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
 from django.utils.translation import gettext_lazy as _
 
 from .mixins import PasswordCheckMixin
@@ -49,3 +49,18 @@ class CustomUserChangeForm(PasswordCheckMixin, UserChangeForm):
 
         model = get_user_model()
         fields = ("email",)
+
+
+class UserLoginForm(AuthenticationForm):
+    """UserLogin from class."""
+
+    def clean(self):
+        """Authenticate clean method."""
+        # TODO Validate username and password using domain validators
+        # username = self.cleaned_data.get("username")
+        # password = self.cleaned_data.get("password")
+
+        # Django authenticate
+        cleaned_data = super().clean()
+
+        return cleaned_data

@@ -4,6 +4,18 @@ from typing import Any, Dict, List, Optional, Union
 
 
 @dataclass
+class UserDTO:
+    """UserDTO class."""
+
+    id: str
+    first_name: str
+    last_name: str
+    rol: str
+    email: str
+    password: Optional[str] = None
+
+
+@dataclass
 class DocumentDTO:
     """DocumentDTO."""
 

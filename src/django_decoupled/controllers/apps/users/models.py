@@ -31,3 +31,4 @@ class User(AbstractUser):
         verbose_name = _("User")
         verbose_name_plural = _("users")
         ordering = ["email"]
+        app_label = "users"

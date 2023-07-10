@@ -68,7 +68,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = "django_decoupled.controllers.config.urls"
 
 LOGIN_URL = "/users/login/"
-LOGIN_REDIRECT_URL = "/workspaces/upload_file/"
+LOGIN_REDIRECT_URL = "/users/dashboard/"
 LOGOUT_REDIRECT_URL = "/users/login/"
 
 TEMPLATES = [

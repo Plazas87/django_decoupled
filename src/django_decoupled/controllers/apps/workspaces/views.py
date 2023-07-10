@@ -161,15 +161,3 @@ class WorkspaceDetailView(LoginRequiredMixin, DetailView):
 
     model = Workspace
     template_name = "workspaces/detail.html"
-
-    # def get_context_data(self, **kwargs):
-    #     """Get context data method."""
-    #     # Placeholder for the metrics
-    #     json_file_path = settings.BASE_DIR / "static/metrics.json"
-    #     with open(json_file_path, encoding="utf-8") as json_file:
-    #         report = json.load(json_file)
-
-    #     context = super().get_context_data(**kwargs)
-    #     context["metrics"] = report["metrics"]
-
-    #     return context

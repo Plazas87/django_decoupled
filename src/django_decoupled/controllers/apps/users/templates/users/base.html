@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -9,93 +10,75 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static 'users/css/main.css' %}">
 
     {% if title %}
-    <title>La Pastilla - {{ title }}</title>
+    <title>Django Decoupled - {{ title }}</title>
     {% else %}
-    <title>La Pastilla</title>
+    <title>Django Decoupled</title>
     {% endif %}
 </head>
+
 <body>
-<header class="site-header">
-    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-            <a class="navbar-brand mr-4" href="{% url 'users:register' %}"><strong>La Pastilla</strong></a>
-<!--            <a class="navbar-brand mr-4" href="{% url 'users:register' %}"><img src="{% static 'assests/logos/logo_2.png' %}"></a>-->
-<!--            <a class="navbar-brand mr-4" href="{% url 'users:register' %}">m</a>-->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="{% url 'users:register' %}"><strong>Django Decoupled</strong></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
                     aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarToggle">
-                <div class="navbar-nav mr-auto">
-                    <p>{{ static }}</p>
-                    {% if user.is_authenticated %}
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <p>{{ static }}</p>
+                        {% if user.is_authenticated %}
 
-                    {% endif %}
-                </div>
-                <!-- Navbar Right Side -->
-                <div class="navbar-nav">
-                    {% if user.is_authenticated %}
+                        {% endif %}
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+                        {% if user.is_authenticated %}
+                        <a class="nav-item nav-link" href="{% url 'users:logout' %}">Logout</a>
 
-                    {% else %}
+                        {% else %}
                         <a class="nav-item nav-link" href="{% url 'users:login' %}">Login</a>
                         <a class="nav-item nav-link" href="{% url 'users:register' %}">Registrarse</a>
-                    {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
-</header>
-<main role="main" class="container">
-    <div class="row">
-        <div class="col-md-10">
-            {% if messages %}
+        </nav>
+    </header>
+    <main role="main" class="container">
+        <div class="row">
+            <div class="col-md-10">
+                {% if messages %}
 
                 <ul class="messages">
                     {% for message in messages %}
-                        <li {% if message.tags %} class="alert alert-{{ message.tag }}"{% endif %}> {{ message }}</li>
+                    <li {% if message.tags %} class="alert alert-{{ message.tag }}" {% endif %}> {{ message }}</li>
                     {% endfor %}
                 </ul>
+                {% endif %}
 
-<!--                {% for message in messages %}-->
-<!--                <div class="alert alert-{{ message.tag }}" role="alert">-->
-<!--                    {{ message }}-->
-<!--                </div>-->
-<!--                {% endfor %}-->
-            {% endif %}
-
-            {% block content %}{% endblock %}
+                {% block content %}{% endblock %}
+            </div>
         </div>
+    </main>
 
-<!--        <div class="col-md-4">-->
-<!--            <div class="content-section">-->
-<!--                <h3>Our Sidebar</h3>-->
-<!--                <p class='text-muted'>You can put any information here you'd like.</p>-->
-<!--                    <ul class="list-group">-->
-<!--                        <li class="list-group-item list-group-item-light">Latest Posts</li>-->
-<!--                        <li class="list-group-item list-group-item-light">Announcements</li>-->
-<!--                        <li class="list-group-item list-group-item-light">Calendars</li>-->
-<!--                        <li class="list-group-item list-group-item-light">etc</li>-->
-<!--                    </ul>-->
-<!--            </div>-->
-<!--        </div>-->
-    </div>
-</main>
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 </body>
+
 </html>

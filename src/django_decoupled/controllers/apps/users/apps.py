@@ -8,3 +8,4 @@ class UsersConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "django_decoupled.controllers.apps.users"
     verbose_name = "Users"
+    label = "users"

@@ -2,13 +2,50 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from enum import Enum
 from uuid import UUID
 
 from ..exceptions.users import (
     UserEmailValidationError,
-    UserNameValidationError,
+    UserFirstNameValidationError,
+    UserLastNameValidationError,
     UserPasswordValidationError,
+    UserRolNotSupportedError,
 )
+
+
+class UserRolType(Enum):
+    """UserRol Enum Types."""
+
+    SUPERUSER = 0
+    ADMIN = 1
+    STANDART = 2
+
+
+@dataclass(frozen=True)
+class UserRol:
+    """UserRol value object."""
+
+    value: UserRolType
+
+    @classmethod
+    def from_string(cls, value: str) -> UserRol:
+        """Create a UserRol instance from a string."""
+        try:
+            user_rol = UserRolType[value.upper()]
+
+        except KeyError as err:
+            raise UserRolNotSupportedError(message=str(err))
+
+        return UserRol(value=user_rol)
+
+    def __str__(self) -> str:
+        """Nice string representation."""
+        return f"{self.__class__.__name__}({self.value.name})"
+
+    def __repr__(self) -> str:
+        """Nice object representation."""
+        return f"{self.__class__.__name__}({self.value})"
 
 
 @dataclass(frozen=True)
@@ -34,15 +71,26 @@ class UserID:
 
 
 @dataclass
-class UserName:
-    """UserName value object."""
+class UserFirstName:
+    """UserFirstName value object."""
 
     value: str
 
     def __post_init__(self):
         """Post init validation for texts."""
         if len(self.value) > 2000:
-            raise UserNameValidationError("Max text lenght (characters): 2000")
+            raise UserFirstNameValidationError("Max text lenght (characters): 2000")
+
+
+class UserLastName:
+    """UserLastName value object."""
+
+    value: str
+
+    def __post_init__(self):
+        """Post init validation for texts."""
+        if len(self.value) > 2000:
+            raise UserLastNameValidationError("Max text lenght (characters): 2000")
 
 
 @dataclass
@@ -73,6 +121,8 @@ class User:
     """User model class."""
 
     id: UserID
-    name: UserName
+    first_name: UserFirstName
+    last_name: UserLastName
+    rol: UserRol
     email: UserEmail
     password: UserPassword

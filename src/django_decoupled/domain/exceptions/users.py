@@ -3,8 +3,12 @@
 from . import DomainError
 
 
-class UserNameValidationError(DomainError):
-    """UserNameValidation exception."""
+class UserFirstNameValidationError(DomainError):
+    """UserFirstNameValidationError exception."""
+
+
+class UserLastNameValidationError(DomainError):
+    """UserLastNameValidationError exception."""
 
 
 class UserEmailValidationError(DomainError):
@@ -13,3 +17,7 @@ class UserEmailValidationError(DomainError):
 
 class UserPasswordValidationError(DomainError):
     """UserPasswordValidation exception."""
+
+
+class UserRolNotSupportedError(DomainError):
+    """UserRolNotSupported exception."""
